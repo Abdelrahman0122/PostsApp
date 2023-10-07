@@ -4,6 +4,7 @@ import { init } from './src/init.js';
 import morgan from 'morgan';
 import { dbConnection } from './DB/Connection.js';
 import dotenv from 'dotenv';
+import multer from 'multer';
 dotenv.config()
 
 

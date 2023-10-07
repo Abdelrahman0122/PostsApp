@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         default: false,
       },
     profilePicture:{
-        type:String,
+        type:Object,
     },
 changePasswordAt:Date,
 },{timestamps:true})

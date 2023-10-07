@@ -3,19 +3,26 @@ import jwt from 'jsonwebtoken';
 import { catchError } from "../../utils/catchError.js";
 import { userModel } from '../../../DB/models/user.model.js';
 import { AppError } from '../../utils/AppError.js';
+import cloudinary from '../../utils/cloudinary.js';
 
-export const signUp =catchError( async (req, res,next) => {
-    let isFound = await userModel.findOne({ email: req.body.email });
-    if (isFound) {
-next(new AppError("email already exist", 400))
- }
- let user = new userModel(req.body)
- await user.save();
-    res.status(201).json({
-        status: "success",
-        data: user
-    })
-})
+export const signUp = catchError(async (req, res, next) => {
+  let isFound = await userModel.findOne({ email: req.body.email });
+  if (isFound) {
+    next(new AppError("email already exist", 400));
+  }
+  let user = new userModel(req.body);
+  if (req.file) {
+    const { secure_url, public_id } = await cloudinary.uploader.upload(req.file.path, {
+      folder: "SocialMedia",
+    });
+    user.profilePicture = { secure_url, public_id };
+  }
+  await user.save();
+  res.status(201).json({
+    status: "success",
+    data: user,
+  });
+});
 
 export const signIn = catchError(async (req, res, next) => {
     let { email, password } = req.body;
