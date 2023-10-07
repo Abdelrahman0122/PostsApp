@@ -17,24 +17,29 @@ next(new AppError("email already exist", 400))
     })
 })
 
-export const signIn = catchError(async (req, res,next) => {
+export const signIn = catchError(async (req, res, next) => {
     let { email, password } = req.body;
     let isFound = await userModel.findOne({ email });
-if (!isFound) {
-    next(new AppError("email or password is wrong", 400))
-}
-    const match =  bcrypt.compareSync(password, isFound.password);
-    if (isFound && match) {
-     let token = jwt.sign({name:isFound.name,role:isFound.role,userId:isFound._id},"abdo")
-        isFound.isOnline = true;
-        await isFound.save();
-    return res.status(200).json({
-            status: "success",
-            token
-        })  
+  
+    if (!isFound) {
+      return next(new AppError("email not found", 404));
     }
-    next(new AppError("email or password is wrong", 400))
-})
+  
+    const match = bcrypt.compareSync(password, isFound.password);
+  console.log(isFound)
+    if (!match) {
+      return next(new AppError("incorrect password", 400));
+    }
+  
+    let token = jwt.sign({ name: isFound.name, role: isFound.role, userId: isFound._id }, "abdo");
+    isFound.isOnline = true;
+    await isFound.save();
+  
+    res.status(200).json({
+      status: "success",
+      token
+    });
+  });
   
 
 export const logout = catchError(async (req, res,next) => {

@@ -23,7 +23,15 @@ const PostsSchema = new mongoose.Schema({
         type:Schema.Types.ObjectId,
         ref:"User"
     },
+    LikedBy:[{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }],
+    Likes:{
+        type:Number,
+        default:0
+    },
 },{timestamps:true})
 
-export const PostsModel = model('Post', userSchema)
+export const PostsModel = model('Post', PostsSchema)
 

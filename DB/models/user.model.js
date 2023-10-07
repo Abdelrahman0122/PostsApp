@@ -30,13 +30,11 @@ const userSchema = new mongoose.Schema({
 changePasswordAt:Date,
 },{timestamps:true})
 
-userSchema.pre("save",function(){
-    this.password = bcrypt.hashSync(this.password,7);
-})
-
-userSchema.pre("findOneAndUpdate",function(){
-    this._update.password = bcrypt.hashSync(this._update.password ,7);
-})
+userSchema.pre("save", function(next) {
+    if (!this.isModified("password")) return next();
+    this.password = bcrypt.hashSync(this.password, 7);
+    next();
+  });
 
 
 
