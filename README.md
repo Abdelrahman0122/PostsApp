@@ -41,14 +41,16 @@ PostsApp is a social media application built using Node.js.
 To get started with the PostsApp application, follow these steps:
 
 1. Clone the repository:
+ ```
+ git clone     git clone https://github.com/Abdelrahman0122/PostsApp.git
 
-   ```bash
-   git clone https://github.com/Abdelrahman0122/PostsApp.git
-## Install the dependencies
+ ``` 
+2. Navigate to the project directory:
 
-To install the dependencies for the PostsApp application, follow these steps:
-
-1. install npm package:
+```
+cd PostsApp 
+```
+3. install npm package:
 
    ```bash
    npm install
