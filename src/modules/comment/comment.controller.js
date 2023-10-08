@@ -8,14 +8,14 @@ import { catchError } from "../../utils/catchError.js";
 //ADD COMMENT
  export const addComment = catchError(async (req, res,next) => {
   //post link
-  let { id } = req.params;
-  let post = await PostsModel.findById(id);
-  if (!post) {
+  let { postId } = req.body;
+  let post = await PostsModel.findOne({ _id: postId, privcy: "public" });
+    if (!post) {
     return next(new AppError("post not found", 404));
   }
-  let comment = new commentModel(req.body);
+ let comment = new commentModel({ comment: req.body.comment });
   comment.user = req.user._id;
-  comment.post = id;
+  comment.post = postId;
   await comment.save();
   res.json({ message: "success", comment });
  });
@@ -65,12 +65,13 @@ export const deleteComment = catchError(async (req, res,next) => {
   let { id } = req.params;
   let { _id } = req.user; // get userId from logged-in user
   let comment = await commentModel.findById(id);
+  let post = await PostsModel.findById(comment.post);
 
   if (!comment) {
     return next(new AppError("comment not found", 404));
   }
 
-  if (!comment.user.equals(_id)) { // check if logged-in user is comment owner
+  if (!comment.user.equals(_id) && !post.user.equals(_id)) { // check if logged-in user is comment owner
       return next(new AppError("you are not authorized to delete this comment", 403));
     }
 

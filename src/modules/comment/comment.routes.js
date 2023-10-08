@@ -6,7 +6,7 @@ import { CreateCommentSchema, UpdateCommentSchema } from "./comment.validation.j
 
  export const commentRouter = express.Router();
 
-   commentRouter.post("/addComment/:id",validation(CreateCommentSchema),protectRoutes ,comment.addComment);
+   commentRouter.post("/addComment",validation(CreateCommentSchema),protectRoutes ,comment.addComment);
    commentRouter.get("/getAllComments/:id", comment.getAllComments);
    commentRouter.patch("/editComment/:id",validation(UpdateCommentSchema),protectRoutes ,comment.editComment);
    commentRouter.delete("/deleteComment/:id",protectRoutes ,comment.deleteComment);
