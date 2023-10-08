@@ -10,4 +10,6 @@ authRouter.post("/signUp",validation(SignUpSchema) ,multerCloud(allowedValidatio
 authRouter.post("/signIn",validation(SignInSchema) ,auth.signIn);
 authRouter.post("/logout",auth.logout);
 authRouter.post("/changePassword",validation(ChangePasswordSchema),auth.protectRoutes ,auth.changePassword);
+authRouter.post("/forgetPassword",auth.forgetPassword);
+authRouter.post("/resetPassword",auth.resetPassword);
 

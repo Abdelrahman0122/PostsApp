@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema({
         type:Object,
     },
 changePasswordAt:Date,
+forgetPasswordToken:String,
 },{timestamps:true})
 
 userSchema.pre("save", function(next) {

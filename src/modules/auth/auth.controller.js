@@ -4,6 +4,8 @@ import { catchError } from "../../utils/catchError.js";
 import { userModel } from '../../../DB/models/user.model.js';
 import { AppError } from '../../utils/AppError.js';
 import cloudinary from '../../utils/cloudinary.js';
+import { customAlphabet } from 'nanoid'
+import { sendEmail } from '../../email/sendEmail.js';
 
 export const signUp = catchError(async (req, res, next) => {
   let isFound = await userModel.findOne({ email: req.body.email });
@@ -37,7 +39,6 @@ export const signIn = catchError(async (req, res, next) => {
     if (!match) {
       return next(new AppError("incorrect password", 400));
     }
-  
     let token = jwt.sign({ name: isFound.name, role: isFound.role, userId: isFound._id }, "abdo");
     isFound.isOnline = true;
     await isFound.save();
@@ -76,8 +77,6 @@ export const changePassword = catchError(async (req, res,next) => {
     if (!match) {
       return next(new AppError("Old password is incorrect", 400));
     }
-    
-  
     if (!user) {
       return next(new AppError("User not found", 404));
     }
@@ -86,8 +85,40 @@ export const changePassword = catchError(async (req, res,next) => {
     }  
     user.password = newPassword;
     await user.save();
-  
     res.json({ message: "Password changed successfully" });
+})
+
+// forget password 
+export const forgetPassword = catchError(async (req, res,next) => {
+  let { email } = req.body;
+  let isFounded = await userModel.findOne({ email });
+  if (!isFounded) {
+    return next(new AppError("email not found", 404));
+  }else {
+  const nanoid = customAlphabet('1234567890abcdef', 4)
+  isFounded.forgetPasswordToken = nanoid() //=> "4f90d"
+  console.log(isFounded.forgetPasswordToken);
+    sendEmail({ email, OTP: isFounded.forgetPasswordToken });
+  }
+  await isFounded.save();
+  res.status(200).json({
+    status: "OTP sent successfully",
+    data: null
+  })
+})
+
+export const resetPassword = catchError(async (req, res,next) => {
+  let { email ,OTP, newPassword } = req.body;
+  let isFounded = await userModel.findOne({ email });
+  if(OTP != isFounded.forgetPasswordToken){
+    return next(new AppError("OTP is incorrect", 400));
+  }
+  isFounded.password = newPassword;
+  await isFounded.save();
+  res.status(200).json({
+    status: "Password reset successfully",
+    data: null
+  })
 })
 
 export const protectRoutes = catchError(async (req, res, next) => {

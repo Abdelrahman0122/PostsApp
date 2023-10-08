@@ -31,7 +31,17 @@ const PostsSchema = new mongoose.Schema({
         type:Number,
         default:0
     },
-},{timestamps:true})
+},{ timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
+)
+
+PostsSchema.virtual("myComment", {
+    ref: "comment",
+    localField: "_id",
+    foreignField: "post",
+  });
+  PostsSchema.pre(/^find/, function () {
+    this.populate("myComment");
+  });
 
 export const PostsModel = model('Post', PostsSchema)
 
