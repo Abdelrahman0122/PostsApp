@@ -42,8 +42,7 @@ To get started with the PostsApp application, follow these steps:
 
 1. Clone the repository:
  ```
- git clone     git clone https://github.com/Abdelrahman0122/PostsApp.git
-
+ git clone https://github.com/Abdelrahman0122/PostsApp.git
  ``` 
 2. Navigate to the project directory:
 
@@ -52,8 +51,9 @@ cd PostsApp
 ```
 3. install npm package:
 
-   ```bash
-   npm install
+```bash
+npm install
+```
 
 ## Set up the environment variables:
 - Create a .env file in the root directory of the project.
