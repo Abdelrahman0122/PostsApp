@@ -2,6 +2,18 @@
 
 PostsApp is a social media application built using Node.js.
 
+## Table of Contents
+
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Installation](#install-the-dependencies)
+  - [Setting Up Environment Variables](#set-up-the-environment-variables)
+- [API Documentation](#api-endpoints)
+  - [Post Routes](#post-routes)
+  - [Comment Routes](#comment-routes)
+  - [Auth Routes](#auth-routes)
+
 ## Features
 
 - User registration and authentication
