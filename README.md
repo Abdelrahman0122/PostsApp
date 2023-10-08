@@ -51,7 +51,7 @@ To install the dependencies for the PostsApp application, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Abdelrahman0122/PostsApp.git
+   npm install
 
 ## Set up the environment variables:
 - Create a .env file in the root directory of the project.
