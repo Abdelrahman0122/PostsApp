@@ -48,7 +48,7 @@ To get started with the PostsApp application, follow these steps:
 
 To install the dependencies for the PostsApp application, follow these steps:
 
-1. Clone the repository:
+1. install npm package:
 
    ```bash
    npm install
