@@ -13,7 +13,6 @@ if(!customValidation){
     customValidation=allowedValidation.image
 }
     const storage = multer.diskStorage({})
- console.log(customValidation);
     const fileFilter = (req, file, cb) => {
         if (customValidation.includes(file.mimetype)) {
             cb(null, true)
