@@ -9,15 +9,17 @@ import { sendEmail } from '../../email/sendEmail.js';
 
 export const signUp = catchError(async (req, res, next) => {
   let isFound = await userModel.findOne({ email: req.body.email });
+  console.log(req.body)
+  let { name, email, password } = req.body;
   if (isFound) {
     next(new AppError("email already exist", 400));
   }
-  let user = new userModel(req.body);
+  let user = new userModel({ name, email, password });
   if (req.file) {
-    const { secure_url, public_id } = await cloudinary.uploader.upload(req.file.path, {
+    const { secure_url }= await cloudinary.uploader.upload(req.file.path, {
       folder: "SocialMedia",
     });
-    user.profilePicture = { secure_url, public_id };
+    user.profilePicture = secure_url ;
   }
   await user.save();
   res.status(201).json({
@@ -40,7 +42,7 @@ export const signIn = catchError(async (req, res, next) => {
       return next(new AppError("incorrect password", 400));
     }
     let token = jwt.sign({ name: isFound.name, role: isFound.role, userId: isFound._id }, "abdo");
-    isFound.isOnline = true;
+    isFound.isOnline = true; 
     await isFound.save();
   
     res.status(200).json({

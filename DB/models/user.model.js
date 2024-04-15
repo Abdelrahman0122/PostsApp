@@ -25,8 +25,12 @@ const userSchema = new mongoose.Schema({
         default: false,
       },
     profilePicture:{
-        type:Object,
+        type:String,
     },
+    posts: [{
+        type:Schema.Types.ObjectId,
+        ref:"Post"
+    }],
 changePasswordAt:Date,
 forgetPasswordToken:String,
 },{timestamps:true})

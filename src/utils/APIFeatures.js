@@ -12,10 +12,10 @@ export default class APiFeatures{
        if(this.queryString.page <=0)page = 1 
        let skip = (page-1) * 4 
        this.page = page;
-       this.mongooseQuery.skip(skip).limit(4)
+       this.mongooseQuery.skip(skip).limit(100)
        return this;
     }
-
+ 
     filter(){
         let filterObj = {...this.queryString}
         let excludedQuery = ["page","fields","sort","keyword"]
@@ -39,7 +39,7 @@ export default class APiFeatures{
 
     search(){
         if(this.queryString.keyword){
-            this.mongooseQuery.find({$or:[{title:{$regex:this.queryString.keyword,$options:"i"}},{description:{$regex:this.queryString.keyword,$options:"i"}}]})
+            this.mongooseQuery.find({$or:[{body:{$regex:this.queryString.keyword,$options:"i"}},{description:{$regex:this.queryString.keyword,$options:"i"}}]})
         }
         return this; 
     }

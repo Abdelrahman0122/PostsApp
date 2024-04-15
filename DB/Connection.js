@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config()
 
 export function dbConnection(){
-    mongoose.connect("mongodb://127.0.0.1:27017/socialMedia").then(()=>{
+    mongoose.connect(process.env.DATABASE_URL).then(()=>{
         console.log("connected to db")
-    }).catch((err)=>{
+    }).catch((err)=>{ 
         console.log(err)
     })
 }
