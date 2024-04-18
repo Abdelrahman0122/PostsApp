@@ -22,6 +22,7 @@ PostsApp is a social media application built using Node.js.
 - Profile management
 - Upload and manage profile pictures
 - Email notifications
+- Detect online users
 
 ## Technologies Used
 
