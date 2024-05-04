@@ -13,6 +13,12 @@ const commentSchema = new mongoose.Schema({
     comment:{
         type:String,
     },
+    userImage:{
+        type:String,
+    },
+    userName:{
+        type:String,
+    },
 
 },{timestamps:true})
 

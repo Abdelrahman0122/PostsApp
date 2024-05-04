@@ -11,12 +11,6 @@ const PostsSchema = new mongoose.Schema({
     postImage:{
         type:String,
     },
-    userImage:{
-        type:String,
-    },
-    userName:{
-        type:String,
-    },
     privcy:{
         type:String,
         enum:["public","private"],

@@ -142,11 +142,12 @@ export const protectRoutes = catchError(async (req, res, next) => {
 });
 
 
+
 export const allowTo = (...roles) => {
-    return catchError((req, res, next) => {
-        if (!roles.includes(req.user.role)) {
-            return next(new AppError("you are not allowed to do this action", 403));
-        }
-        next();
-    })
-}
+  return catchError(async (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new AppError("you are not allowed to do this action", 403));
+    }
+    next();
+  });
+};

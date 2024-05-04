@@ -7,13 +7,14 @@ import { catchError } from "../../utils/catchError.js";
 
 //ADD COMMENT
  export const addComment = catchError(async (req, res,next) => {
-  //post link
   let { postId } = req.body;
   let post = await PostsModel.findOne({ _id: postId, privcy: "public" });
     if (!post) {
     return next(new AppError("post not found", 404));
   }
- let comment = new commentModel({ comment: req.body.comment });
+  req.body.userImage = req.user.profilePicture;
+  req.body.userName = req.user.name;
+ let comment = new commentModel(req.body);
   comment.user = req.user._id;
   comment.post = postId;
   await comment.save();
