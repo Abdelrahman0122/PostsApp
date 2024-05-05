@@ -11,7 +11,7 @@ const PostsSchema = new mongoose.Schema({
     postImage:{
         type:String,
     },
-    privcy:{
+    privacy:{
         type:String,
         enum:["public","private"],
         default:"public"
