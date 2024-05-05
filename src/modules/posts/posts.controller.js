@@ -34,7 +34,7 @@ export const addPost = catchError(async (req, res, next) => {
 export const getAllPosts = catchError(async (req, res, next) => {
   try {
     const apiFeatures = new APiFeatures(
-      PostsModel.find({ privcy: "public" }).sort('-createdAt'),
+      PostsModel.find({ privacy: "public" }),
       req.query
     )
       .populate("user", "name profilePicture")
@@ -42,9 +42,9 @@ export const getAllPosts = catchError(async (req, res, next) => {
       .sort()
       .search()
       .fields();
-    const result = await apiFeatures.mongooseQuery.find({privcy: "public"});
+    const result = await apiFeatures.mongooseQuery;
     res
-      .status(201)
+      .status(200)
       .json({ message: "Success", page: apiFeatures.page, result });
   } catch (error) {
     next(error); // Pass any errors to the error handling middleware
@@ -56,7 +56,7 @@ export const getPostsByUser = catchError(async (req, res, next) => {
   let posts = await PostsModel.find({ user: req.params.id }).populate(
     "user",
     "name profilePicture",
-  ).sort('-createdAt');
+  );
   if (!posts.length) {
     return next(new AppError("no posts found", 404));
   }
@@ -69,7 +69,7 @@ export const getPostsByUser = catchError(async (req, res, next) => {
 // get single post by id
 export const getSinglePost = catchError(async (req, res, next) => {
   let { id } = req.params;
-  let post = await PostsModel.findById(id).populate("user", "name").sort('-createdAt');
+  let post = await PostsModel.findById(id).populate("user", "name");
   if (!post) {
     return next(new AppError("post not found", 404));
   }
@@ -79,7 +79,7 @@ export const getSinglePost = catchError(async (req, res, next) => {
   });
 });
 
-// update post - change  body or privcy
+// update post - change  body or privacy
 export const updatePost = catchError(async (req, res, next) => {
   let { id } = req.params;
   let { _id } = req.user; // get userId from logged-in user
@@ -127,7 +127,7 @@ export const deletePost = catchError(async (req, res, next) => {
 // see private posts by logged-in user
 export const getPrivatePosts = catchError(async (req, res, next) => {
   let { _id } = req.user;
-  let posts = await PostsModel.find({ user: _id, privcy: "private" }).sort('-createdAt');
+  let posts = await PostsModel.find({ user: _id, privacy: "private" });
   res.status(200).json({
     status: "success",
     data: posts,

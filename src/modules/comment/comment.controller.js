@@ -8,7 +8,7 @@ import { catchError } from "../../utils/catchError.js";
 //ADD COMMENT
  export const addComment = catchError(async (req, res,next) => {
   let { postId } = req.body;
-  let post = await PostsModel.findOne({ _id: postId, privcy: "public" });
+  let post = await PostsModel.findOne({ _id: postId, privacy: "public" });
     if (!post) {
     return next(new AppError("post not found", 404));
   }
