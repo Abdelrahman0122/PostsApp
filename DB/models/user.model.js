@@ -31,6 +31,25 @@ const userSchema = new mongoose.Schema({
         type:Schema.Types.ObjectId,
         ref:"Post"
     }],
+    friends: [{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }],
+    friendRequests: [{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }],
+    about:{
+        type:String,
+        trim:true,
+        maxLength:[100,"your about must be less than 100 chars"]
+    },
+    interests:[{
+        type:String,
+    }],
+    education:{
+        type:String,
+    },
 changePasswordAt:Date,
 forgetPasswordToken:String,
 },{timestamps:true})

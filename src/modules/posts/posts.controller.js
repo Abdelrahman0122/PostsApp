@@ -58,7 +58,10 @@ export const getPostsByUser = catchError(async (req, res, next) => {
     "name profilePicture",
   );
   if (!posts.length) {
-    return next(new AppError("no posts found", 404));
+    res.status(200).json({
+      message: "no posts found",
+      posts,
+    });
   }
   res.status(200).json({
     message: "success",
