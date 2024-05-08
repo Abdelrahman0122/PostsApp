@@ -29,10 +29,7 @@ authRouter.post(
 authRouter.post("/forgetPassword", auth.forgetPassword);
 authRouter.post("/resetPassword", auth.resetPassword);
 authRouter.patch("/updateUser/:id", auth.protectRoutes ,auth.updateUser)
-authRouter.post("/addFriend/:friendId", auth.protectRoutes ,auth.addFriend);
-authRouter.post("/acceptRequest/:friendId", auth.protectRoutes ,auth.acceptRequest)
-authRouter.post("/cancelRequest/:friendId", auth.protectRoutes ,auth.cancelRequest)
-authRouter.get("/getRequests", auth.protectRoutes ,auth.getRequests)
+
 
 
 
